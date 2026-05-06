@@ -56,6 +56,9 @@ _AUTH_EXEMPT = frozenset({"/api/auth/status", "/api/auth/login", "/api/status"})
 
 def _check_auth(scope: Scope) -> bool:
     """Check if the request has a valid auth token (header or cookie)."""
+    if not AUTH_TOKEN:
+        return False
+
     # Check Authorization: Bearer <token> header
     for key, val in scope.get("headers", []):
         if key == b"authorization":
